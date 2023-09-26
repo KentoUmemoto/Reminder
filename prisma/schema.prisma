@@ -58,3 +58,19 @@ model VerificationToken {
   @@unique([identifier, token])
   @@map("verificationtokens")
 }
+
+model Task {
+  id String @id @default(cuid())
+  name String
+  start DateTime
+  done Boolean
+  repeatType RepeatType @default(ONCE) @map("repeat_type")
+  @@map("tasks")
+}
+
+enum RepeatType {
+  YEAR
+  MONTH
+  WEEK
+  ONCE
+}
