@@ -28,6 +28,7 @@
 
   // Uncomment the next line to run commands after the container is created.
   // "postCreateCommand": "cat /etc/os-release",
+  "postCreateCommand": "git config --system --add safe.directory ${containerWorkspaceFolder}",
 
   // Configure tool-specific properties.
   "customizations": {
@@ -37,7 +38,8 @@
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "[markdown]": {
           "editor.formatOnSave": false
-        }
+        },
+        "terminal.integrated.fontFamily": "HackGen Console NF"
       },
       "extensions": [
         "MS-CEINTL.vscode-language-pack-ja",
@@ -46,11 +48,12 @@
         "PKief.material-icon-theme",
         "Prisma.prisma",
         "bradlc.vscode-tailwindcss",
-        "formulahendry.auto-rename-tag"
+        "formulahendry.auto-rename-tag",
+        "ms-azuretools.vscode-docker"
       ]
     }
-  }
+  },
 
   // Uncomment to connect as an existing user other than the container default. More info: https://aka.ms/dev-containers-non-root.
-  // "remoteUser": "devcontainer"
+  "remoteUser": "node"
 }
