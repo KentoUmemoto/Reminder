@@ -12,8 +12,8 @@ services:
     volumes:
       - type: bind
         source: .
-        target: /workspace/app
-      - node_modules:/workspace/app/node_modules
+        target: /home/node/app
+      - app_node_modules:/home/node/app/node_modules
     command: sh -c "npm run dev"
     networks:
       - default
@@ -31,7 +31,7 @@ services:
       - '5432:5432'
 
 volumes:
-  node_modules:
+  app_node_modules:
 
 networks:
   reminder_default:
