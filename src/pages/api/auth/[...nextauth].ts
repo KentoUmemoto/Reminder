@@ -1,11 +1,9 @@
-import NextAuth from 'next-auth'
-import GoogleProvider from 'next-auth/providers/google'
+import prisma from '@/libs/prisma'
 import { PrismaAdapter } from '@auth/prisma-adapter'
-import { PrismaClient } from '@prisma/client'
+import NextAuth, { NextAuthOptions } from 'next-auth'
+import GoogleProvider from 'next-auth/providers/google'
 
-const prisma = new PrismaClient()
-
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
@@ -14,4 +12,16 @@ export default NextAuth({
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
-})
+  callbacks: {
+    // sessionにuser.idを追加
+    session: ({ session, user }) => ({
+      ...session,
+      user: {
+        ...session.user,
+        id: user.id,
+      },
+    }),
+  },
+}
+
+export default NextAuth(authOptions)
