@@ -8,7 +8,7 @@ export function Layout({ children }: Props) {
   return (
     <>
       <main>
-        <div className='container mx-auto px-4'>{children}</div>
+        <div className='container mx-auto p-8'>{children}</div>
       </main>
     </>
   )
