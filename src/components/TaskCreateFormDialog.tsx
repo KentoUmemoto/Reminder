@@ -14,6 +14,7 @@ type FormData = {
   start: Date
   type: RepeatType
 }
+
 export const TaskCreateFormDialog = ({ mutate, isOpen, setIsOpen }: Props) => {
   const {
     register,
@@ -49,7 +50,7 @@ export const TaskCreateFormDialog = ({ mutate, isOpen, setIsOpen }: Props) => {
           <Select.Option value={RepeatType.YEAR}>年</Select.Option>
         </Select>
         <p>{errors.type?.message}</p>
-        <input className='btn btn-primary' type='submit' />
+        <Input className='btn btn-primary' type='submit' value={'作成'} />
       </form>
     </TaskFormDialog>
   )

@@ -29,4 +29,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     })
     res.json(result)
   }
+
+  // DELETE: delete task
+  if (req.method === 'DELETE') {
+    const result = await prisma.task.delete({
+      where: { id: id },
+    })
+    res.json(result)
+  }
 }

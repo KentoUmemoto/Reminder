@@ -1,9 +1,9 @@
 import { useForm } from 'react-hook-form'
 import { TaskFormDialog } from '@/components/TaskFormDialog'
 import { RepeatType } from '@prisma/client'
-import { Input, Select } from 'react-daisyui'
+import { Input, Select, Button, Modal } from 'react-daisyui'
 import { formatDate } from '@/libs/utils'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { SerializedTask } from '@/libs/utils'
 
 type Props = {
@@ -34,6 +34,8 @@ export const TaskUpdateFormDialog = ({ mutate, isOpen, setIsOpen, task }: Props)
     },
   })
 
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false)
+
   const onSubmit = handleSubmit(async (data) => {
     const res = await fetch('api/task/' + task?.id, {
       method: 'POST',
@@ -46,6 +48,20 @@ export const TaskUpdateFormDialog = ({ mutate, isOpen, setIsOpen, task }: Props)
       reset()
     }
   })
+
+  const onDeleteButtonClick = async () => {
+    const res = await fetch('api/task/' + task?.id, {
+      method: 'DELETE',
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify(task),
+    })
+    if (res.status === 200) {
+      mutate()
+      setIsOpen(false)
+      setIsDeleteOpen(false)
+      reset()
+    }
+  }
 
   const options = [
     {
@@ -82,8 +98,36 @@ export const TaskUpdateFormDialog = ({ mutate, isOpen, setIsOpen, task }: Props)
           })}
         </Select>
         <p>{errors.type?.message}</p>
-        <input className='btn btn-primary' type='submit' />
+        <Input className='btn btn-primary' type='submit' value={'更新'} />
+        <Button color={'secondary'} type='button' onClick={() => setIsDeleteOpen(true)}>
+          削除
+        </Button>
       </form>
+
+      <Modal open={isDeleteOpen} className='p-0'>
+        <div className='p-6 flex flex-col'>
+          <Modal.Header className='font-bold'>{'削除しますか？'}</Modal.Header>
+          <Modal.Body className='flex flex-col'>
+            <Button color={'secondary'} onClick={onDeleteButtonClick}>
+              削除
+            </Button>
+            <Button className='mt-4' onClick={() => setIsDeleteOpen(false)}>
+              キャンセル
+            </Button>
+          </Modal.Body>
+          <Modal.Actions>
+            <Button
+              onClick={() => setIsDeleteOpen(false)}
+              size='sm'
+              color='ghost'
+              shape='circle'
+              className='absolute right-2 top-2'
+            >
+              x
+            </Button>
+          </Modal.Actions>
+        </div>
+      </Modal>
     </TaskFormDialog>
   )
 }
