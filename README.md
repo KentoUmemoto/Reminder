@@ -4,30 +4,31 @@
 ### editor
 VSCode  
 devcontainer で開発しています。
-
-### build docker compose
+### in devcontainer
+#### development
 ```bash
-docker compose build
+npm run dev
 ```
-
-### start container
-```bash
-docker compose up -d
-```
-
-### migration
-in devcontainer
+#### migration
 ```bash
 npx prisma migrate dev
 ```
-### generate prisma client
+### generate prisma client 
 in devcontainer
 ```bash
 npx prisma generate
 ```
-
-### prisma studio
-after `docker compose up`
+#### start prisma studio
 ```bash
-docker compsoe exec app npx prisma studio
+npx prisma studio
+```
+
+### docker compose 
+### build 
+```bash
+docker compose build
+```
+### start container
+```bash
+docker compose up -d
 ```
