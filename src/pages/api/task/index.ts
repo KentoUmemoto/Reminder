@@ -15,23 +15,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     res.status(401).json({ message: 'you must be logged in.' })
     return
   }
-  // POST
+  // POST create task
   if (req.method === 'POST') {
-    const { name, start, repeatType } = req.body
-    console.log(name)
+    const { name, start, type } = req.body
     const date = new Date(start)
     const result = await prisma.task.create({
       data: {
         name: name,
         start: date,
-        repeatType: repeatType,
+        repeatType: type,
         user: { connect: { id: session?.user?.id } },
       },
     })
 
     res.json(result)
   }
-  // GET
+  // GET select task
   if (req.method === 'GET') {
     const tasks = await prisma.task.findMany({ where: { user: session?.user } })
     res.json(tasks)

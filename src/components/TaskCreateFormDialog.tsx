@@ -17,7 +17,7 @@ type FormData = {
 export const TaskCreateFormDialog = ({ mutate, isOpen, setIsOpen }: Props) => {
   const {
     register,
-    setValue,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>()
@@ -31,9 +31,7 @@ export const TaskCreateFormDialog = ({ mutate, isOpen, setIsOpen }: Props) => {
     if (res.status === 200) {
       mutate()
       setIsOpen(false)
-      setValue('name', '')
-      setValue('start', new Date())
-      setValue('type', RepeatType.ONCE)
+      reset()
     }
   })
 

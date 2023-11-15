@@ -23,6 +23,8 @@ services:
   db:
     container_name: reminder_db
     image: postgres:16.0
+    environment:
+      TZ: 'Asia/Tokyo'
     volumes:
       - ./db:/var/lib/postgresql/data
     env_file:
