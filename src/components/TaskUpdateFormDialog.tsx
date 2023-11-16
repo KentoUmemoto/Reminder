@@ -4,14 +4,7 @@ import { RepeatType } from '@prisma/client'
 import { Input, Select, Button, Modal } from 'react-daisyui'
 import { formatDate } from '@/libs/utils'
 import { useEffect, useState } from 'react'
-import { SerializedTask } from '@/libs/utils'
-
-type Props = {
-  mutate: Function
-  isOpen: boolean
-  setIsOpen: (isOpen: boolean) => void
-  task: SerializedTask | undefined
-}
+import { useUpdateFormDialog } from '@/store/UpdateFormDialogStore'
 
 type FormData = {
   name: string
@@ -19,7 +12,8 @@ type FormData = {
   type: RepeatType
 }
 
-export const TaskUpdateFormDialog = ({ mutate, isOpen, setIsOpen, task }: Props) => {
+export const TaskUpdateFormDialog = () => {
+  const { task, setIsOpen, mutate, isOpen } = useUpdateFormDialog()
   const {
     register,
     handleSubmit,
@@ -43,7 +37,9 @@ export const TaskUpdateFormDialog = ({ mutate, isOpen, setIsOpen, task }: Props)
       body: JSON.stringify(data),
     })
     if (res.status === 200) {
-      mutate()
+      if (mutate) {
+        mutate()
+      }
       setIsOpen(false)
       reset()
     }
@@ -56,7 +52,9 @@ export const TaskUpdateFormDialog = ({ mutate, isOpen, setIsOpen, task }: Props)
       body: JSON.stringify(task),
     })
     if (res.status === 200) {
-      mutate()
+      if (mutate) {
+        mutate()
+      }
       setIsOpen(false)
       setIsDeleteOpen(false)
       reset()

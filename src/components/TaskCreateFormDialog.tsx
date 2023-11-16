@@ -2,12 +2,7 @@ import { useForm } from 'react-hook-form'
 import { TaskFormDialog } from '@/components/TaskFormDialog'
 import { RepeatType } from '@prisma/client'
 import { Input, Select } from 'react-daisyui'
-
-type Props = {
-  mutate: Function
-  isOpen: boolean
-  setIsOpen: (isOpen: boolean) => void
-}
+import { useCreateFormDialog } from '@/store/CreateFormDialogStore'
 
 type FormData = {
   name: String
@@ -15,13 +10,14 @@ type FormData = {
   type: RepeatType
 }
 
-export const TaskCreateFormDialog = ({ mutate, isOpen, setIsOpen }: Props) => {
+export const TaskCreateFormDialog = () => {
   const {
     register,
     reset,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>()
+  const { mutate, isOpen, setIsOpen } = useCreateFormDialog()
 
   const onSubmit = handleSubmit(async (data) => {
     const res = await fetch('api/task', {
@@ -30,7 +26,9 @@ export const TaskCreateFormDialog = ({ mutate, isOpen, setIsOpen }: Props) => {
       body: JSON.stringify(data),
     })
     if (res.status === 200) {
-      mutate()
+      if (mutate) {
+        mutate()
+      }
       setIsOpen(false)
       reset()
     }
