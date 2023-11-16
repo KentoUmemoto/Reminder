@@ -1,18 +1,17 @@
-import { SerializedTask } from '@/libs/utils'
 import { Spinner } from '@/components/Spinner'
+import { TaskLayout } from '@/components/TaskLayout'
 import { TaskList } from '@/components/TaskList'
 import { useTaskList } from '@/hooks/useTask'
+import { SerializedTask } from '@/libs/utils'
 import { useCreateFormDialog } from '@/store/CreateFormDialogStore'
 import { useUpdateFormDialog } from '@/store/UpdateFormDialogStore'
-import { TaskLayout } from '@/components/TaskLayout'
 
 const TaskPage = () => {
   const { tasks, error, mutate } = useTaskList(() => {
     setCreateFormDialogMutate(mutate)
     setUpdateFormDialogMutate(mutate)
   })
-  const { setIsOpen: setCreateDialogIsOpen, setMutate: setCreateFormDialogMutate } =
-    useCreateFormDialog()
+  const { setMutate: setCreateFormDialogMutate } = useCreateFormDialog()
   const {
     setIsOpen: setUpdateDialogIsOpen,
     setTask: setUpdateTask,

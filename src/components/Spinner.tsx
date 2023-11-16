@@ -1,4 +1,5 @@
 import { Loading } from 'react-daisyui'
+
 export const Spinner = () => {
   return (
     <div role='status'>

@@ -1,6 +1,6 @@
+import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from '@/libs/prisma'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
-import type { NextApiRequest, NextApiResponse } from 'next'
 import { getServerSession } from 'next-auth/next'
 
 // POST /api/task

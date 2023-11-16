@@ -1,10 +1,10 @@
-import '@/styles/globals.css'
-import type { AppProps } from 'next/app'
-import type { NextComponentType } from 'next'
-import { SessionProvider, useSession } from 'next-auth/react'
-import { Layout } from '@/components/Layout'
 import { ReactNode } from 'react'
+import type { NextComponentType } from 'next'
+import type { AppProps } from 'next/app'
+import { Layout } from '@/components/Layout'
 import { Spinner } from '@/components/Spinner'
+import '@/styles/globals.css'
+import { SessionProvider, useSession } from 'next-auth/react'
 
 type CustomAppProps = AppProps & {
   Component: NextComponentType & { auth?: boolean }
